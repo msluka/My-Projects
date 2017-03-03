@@ -1,0 +1,111 @@
+.wrapper {
+  margin-left: 100px;
+  margin-top: 50px;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+
+}
+
+.author {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+  padding-top: 10px;
+  cursor: pointer;
+
+ }
+
+.container {
+  width: 189px;
+  height: 290px;
+  background-color: #1f1f1f;
+  padding-top: 5px;
+  border-radius: 10px;
+  
+}
+
+.display {
+  background-color: gray;
+  width: 169px;
+  height: 69px;
+  text-align: right;
+  margin:auto;
+  padding-right:3px;
+  padding-left:5px;
+  border-radius: 5px;
+  
+}
+
+#display01 {
+  height: 35px;
+  font-size: 25px;
+  margin-top: 2px;
+
+}
+
+#display1 {
+  width: 100%;
+  font-size: 22px;
+  margin-top: 6px;
+  text-align: right;
+  border: none;
+  background-color: gray;
+  
+}
+
+input:focus {
+  outline: none;
+
+}
+
+#display2 {
+  height: 15px;
+  width: 100%;
+  font-size: 12px;
+  text-align: right;
+  margin-right: 10px;
+  overflow: hidden;
+  max-width: 31ch;
+
+}
+
+#display3 {
+  height: 15px;
+  width: 100%;
+  font-size: 12px;
+  text-align: right;
+  overflow: hidden;
+  max-width: 31ch;
+
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 5px;
+  width: 189px;
+  cursor: pointer;
+
+}
+
+button {
+  width: 41px;
+  height: 32px;
+  background-color: #1f1f1f;
+  border: 0;
+  color: gray;
+  outline: none;
+  margin-top: 4px;
+  cursor: pointer;
+
+}
+
+#bonIt {
+  color: red !important;
+  font-weight: bold;
+  
+}

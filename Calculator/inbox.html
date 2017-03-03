@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <meta name="author" content="Shota Mamulashvili">
+  <meta name="description" content="My First Calculator">
+  <meta name="keywords" content="web page,web site, how to bild">
+
+  <link rel="stylesheet" href="css/style.css" />
+  <script type="text/javascript" src="js/javascript.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial scale=1, maximum-scale=1, user-scalable=0">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="container">
+      <div class="display" id="display">
+
+        <div id="display01" />
+
+        <input type="text" readonly id="display1" value="" maxlength="13" />
+
+      </div>
+
+      <div id="display2" maxlength="15"></div>
+      <div id="display3" maxlength="15"></div>
+
+    </div>
+    <div class="author" id="author">Shota Mamulashvili &copy;</div>
+    <div class="buttons">
+      <div class="li1">
+        <button id="bclr" onclick="clr()">C</button>
+        <button id="divi" onclick="divi()">/</button>
+        <button id="mult" onclick="mult()">*</button>
+        <button id="backclr" onclick="backclr()">&#x2190;</button>
+      </div>
+
+      <div class="li2">
+        <button id="b7" onclick="insert7()">7</button>
+        <button id="b8" onclick="insert8()">8</button>
+        <button id="b9" onclick="insert9()">9</button>
+        <button id="bm" onclick="bm()">-</button>
+      </div>
+      <div class="li3">
+        <button id="b4" onclick="insert4()">4</button>
+        <button id="b5" onclick="insert5()">5</button>
+        <button id="b6" onclick="insert6()">6</button>
+        <button id="bp" onclick="bp()">+</button>
+      </div>
+      <div class="li4">
+        <button id="b1" onclick="insert1()">1</button>
+        <button id="b2" onclick="insert2()">2</button>
+        <button id="b3" onclick="insert3()">3</button>
+        <button id="bmd" onclick="bmd()">%</button>
+      </div>
+      <div class="li5">
+        <button id="bonIt" onclick="bonIt()">&#9788; </button>
+        <button id="b0" onclick="insert0()">0</button>
+        <button id="msq" onclick="msq()">&radic;sq</button>
+        <button onclick="myResult()" style="background-color:green; width:36px; margin-right:5px; border-radius:10px">=</button>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+</body>
+
+</html>
