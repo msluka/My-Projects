@@ -3,18 +3,14 @@ window.onload = function () {
     checkInputFormat();
 
     var costumer = {
+
         name: "User",
-        password: "TestTest"
+        password: "Test"
+        
     };
 
+    document.getElementById("login").addEventListener('click', checkData);
 
-    function stopLogin(evt) {
-        evt.preventDefault();
-    }
-
-    document.getElementById("login").addEventListener('click', checkData
-
-    );
 
     function checkData(eve) {
 
@@ -40,8 +36,13 @@ window.onload = function () {
         var messageContainer = document.getElementById("messageContainer");
         var successfullMessage = document.createElement("div");
         successfullMessage.id = "successfullMessage"
-        var textnode = document.createTextNode("You have successfully logged in.");
+        var textnode = document.createTextNode("You have successfully logged in");
+        var back = document.createElement("BUTTON");
+        back.id = "back";
+        var buttontxt = document.createTextNode("Back");
+        back.appendChild(buttontxt);
         successfullMessage.appendChild(textnode);
+        successfullMessage.appendChild(back);
         messageContainer.appendChild(successfullMessage);
 
     };
@@ -50,11 +51,16 @@ window.onload = function () {
 
         var messageContainer = document.getElementById("messageContainer");
         var unsuccessfullMessage = document.createElement("div");
-        unsuccessfullMessage.id = "unsuccessfullMessage"
+        unsuccessfullMessage.id = "unsuccessfullMessage";
         var textnode = document.createTextNode("User Name or Password is incorrect");
+        var tryAgain = document.createElement("BUTTON");
+        tryAgain.id = "tryAgain";
+        var buttontxt = document.createTextNode("Try Again");
+        tryAgain.appendChild(buttontxt);
         unsuccessfullMessage.appendChild(textnode);
+        unsuccessfullMessage.appendChild(tryAgain);
         messageContainer.appendChild(unsuccessfullMessage);
-        //messageContainer.innerHTML=unsuccessfullMessage;
+
     };
 
     function incorrectFormat() {
@@ -63,7 +69,6 @@ window.onload = function () {
         var usernameInput = document.getElementById("user")
         var password = document.getElementById("password").value;
         var passwordInput = document.getElementById("password")
-
 
         if (username.length > 0 && username.length < 4) {
             usernameInput.classList.add("incorrectFormat");
@@ -82,19 +87,40 @@ window.onload = function () {
         var password = document.getElementById("password").value;
         var passwordInput = document.getElementById("password")
 
-
-        if (username.length === 0 || username.length > 4) {
+        if (username.length === 0 || username.length === 4 || username.length > 4) {
             usernameInput.classList.remove("incorrectFormat");
         }
 
-        if (password.length === 0 || password.length > 4) {
+        if (password.length === 0 || password.length === 4 || username.length > 4) {
             passwordInput.classList.remove("incorrectFormat");
         }
     }
 
+
     function checkInputFormat() {
+
         setInterval(function () { incorrectFormat() }, 50);
         setInterval(function () { correctFormat() }, 50);
     }
+
+
+
+    document.addEventListener("click", function (event) {
+
+        if (event.target.id === 'tryAgain') {
+
+            var wrongMessage = document.getElementById("unsuccessfullMessage");
+            document.getElementById("messageContainer").removeChild(wrongMessage);
+        }
+
+        if (event.target.id === 'back') {
+
+            var successMessage = document.getElementById("successfullMessage");
+            document.getElementById("messageContainer").removeChild(successMessage);
+            document.getElementById("user").value = '';
+            document.getElementById("password").value = '';
+        }
+
+    });
 
 }

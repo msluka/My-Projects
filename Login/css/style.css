@@ -11,23 +11,33 @@
    padding: 10px;
    position: relative;
    height: 315px;
+   position: relative;
  }
  
- p {
+ #log {
    text-align: center;
    font-weight: bold;
    font-size: 24px;
+   cursor: default;
+ }
+ 
+ #demo {
+   text-align: center;
+   margin-top: 50px;
+   font-size: 14px !important;
+   color: white;
  }
  
  input {
    height: 40px;
    width: 100%;
    box-sizing: border-box;
-   font-size: 24px;
+   font-size: 18px;
    border-radius: 5px;
    background: #ecf0f1;
    color: #72767b;
    cursor: default;
+   padding-left: 3px;
  }
  
  ::-webkit-input-placeholder {
@@ -51,6 +61,7 @@
    border-radius: 50%;
    left: 100px;
    top: -50px;
+   z-index: 10;
  }
  
  button {
@@ -61,4 +72,54 @@
    border-radius: 5px;
    color: white;
    font-weight: bold;
+ }
+ 
+ #unsuccessfullMessage {
+   width: 300px;
+   height: 315px;
+   background: red;
+   color: white;
+   font-size: 24px;
+   font-weight: bold;
+   text-align: center;
+   padding: 10px;
+   padding-top: 90px;
+   position: absolute;
+   border-radius: 10px;
+   left: 0px;
+   top: 0px;
+   cursor: default;
+ }
+ 
+ #successfullMessage {
+   width: 300px;
+   height: 315px;
+   background: limegreen;
+   color: white;
+   font-size: 24px;
+   font-weight: bold;
+   text-align: center;
+   padding: 10px;
+   padding-top: 90px;
+   position: absolute;
+   border-radius: 10px;
+   left: 0px;
+   top: 0px;
+   cursor: default;
+ }
+ 
+ #tryAgain {
+   width: 100px;
+   font-size: 16px;
+   margin-left: 90px;
+   margin-top: 90px;
+   display: block;
+ }
+ 
+ #back {
+   width: 100px;
+   font-size: 16px;
+   margin-left: 90px;
+   margin-top: 90px;
+   display: block;
  }
