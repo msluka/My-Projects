@@ -1,0 +1,9 @@
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\bin\Debug\Calculator_CS.exe.config
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\bin\Debug\Calculator_CS.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\bin\Debug\Calculator_CS.pdb
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.csprojResolveAssemblyReference.cache
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.Form1.resources
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.Properties.Resources.resources
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.csproj.GenerateResource.Cache
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\Calculator_CS\Calculator_CS\obj\Debug\Calculator_CS.pdb
