@@ -1,0 +1,20 @@
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\bin\Debug\StringToXML.exe.config
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\bin\Debug\StringToXML.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\bin\Debug\StringToXML.pdb
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\obj\Debug\StringToXML.Form1.resources
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\obj\Debug\StringToXML.Properties.Resources.resources
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\obj\Debug\StringToXML.csproj.GenerateResource.Cache
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\obj\Debug\StringToXML.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\StringToXML\StringToXML\obj\Debug\StringToXML.pdb
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\bin\Debug\StringToXML.exe.config
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\bin\Debug\StringToXML.exe
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\bin\Debug\StringToXML.pdb
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.csprojResolveAssemblyReference.cache
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.Form1.resources
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.Properties.Resources.resources
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.csproj.GenerateResource.Cache
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.exe
+C:\Users\Lenovo Yoga 2 11\Desktop\fonts and icons\StringToXML\StringToXML\obj\Debug\StringToXML.pdb
+D:\GitHub\My-Projects\StringToXML_CS\StringToXML\bin\Debug\StringToXML.exe.config
+D:\GitHub\My-Projects\StringToXML_CS\StringToXML\obj\Debug\StringToXML.exe
+D:\GitHub\My-Projects\StringToXML_CS\StringToXML\obj\Debug\StringToXML.pdb
