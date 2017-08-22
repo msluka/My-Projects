@@ -1,0 +1,5 @@
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\LRUapplication\LRUapplication\bin\Debug\LRUapplication.exe.config
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\LRUapplication\LRUapplication\bin\Debug\LRUapplication.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\LRUapplication\LRUapplication\bin\Debug\LRUapplication.pdb
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\LRUapplication\LRUapplication\obj\Debug\LRUapplication.exe
+c:\users\lenovo yoga 2 11\documents\visual studio 2015\Projects\LRUapplication\LRUapplication\obj\Debug\LRUapplication.pdb
