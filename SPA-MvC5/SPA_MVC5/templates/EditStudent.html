@@ -1,0 +1,60 @@
+﻿<div id="editForm"  class="jumbotron" style="display: block; font-size:15px; border:2px solid skyblue; padding-top:18px;padding-bottom:18px">
+    <form role="form" name="EditStu" >
+        <div class="form-group">
+            <label for="inpId">Id</label>
+            <input id="inpId" type="text"
+                   class="form-control" ng-model="studentToEdit.Id" name="id" required />
+            <span style="color:red" ng-show="studentToEdit.fname.$dirty && studentToEdit.fname.$invalid">
+                <span ng-show="studentToEdit.id.$error.required">Student Id is required.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inpFirstName">First Name</label>
+            <input id="inpFirstName" type="text"
+                   class="form-control" ng-model="studentToEdit.FirstName" name="fname" required />
+            <span style="color: red" ng-show="studentToEdit.fname.$dirty && studentToEdit.fname.$invalid">
+                <span ng-show="studentToEdit.fname.$error.required">Student FirstName is required.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inpLastName">Last Name</label>
+            <input id="inpLastName" type="text"
+                   class="form-control" ng-model="studentToEdit.LastName" name="lname" required />
+            <span style="color: red" ng-show="studentToEdit.lname.$dirty && studentToEdit.lname.$invalid">
+                <span ng-show="studentToEdit.lname.$error.required">Please Provide LastName for Student.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inpAge">Age</label>
+            <input id="inpAge" type="text"
+                   class="form-control" ng-model="studentToEdit.Age" name="age" ng-pattern="pattern" required />
+            <span style="color: red" ng-show="studentToEdit.age.$dirty && studentToEdit.age.$invalid">
+                <span ng-show="studentToEdit.age.$error.required">Age is required.</span>
+                <span ng-show="studentToEdit.age.$error.pattern">Age must be positive number.</span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inpGender">Gender : </label>
+            <label id="inpGender" ng-repeat="Gender in genders">
+                <input type="radio" ng-model="studentToEdit.Gender" ng-value="Gender" />{{Gender}}
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="inpStatus">Status : </label>
+            <label id="inpStatus" ng-repeat="St in statuses">
+                <input type="radio" ng-model="studentToEdit.ReadStatus" ng-value="St"/>{{St}}
+            </label>
+        </div>
+    </form>
+   
+    <input type="submit" id="btnAddStudent" class="btn btn-primary"
+           value="Cancel" ng-click="goto()"/>
+    <input type="submit" id="btnAddStudent" class="btn btn-primary"
+           value="Update" ng-click="Update()"
+           ng-disabled="studentToEdit.fname.$pristine && studentToEdit.fname.$invalid ||
+       studentToEdit.fname.$untouched && studentToEdit.fname.$invalid ||
+       studentToEdit.lname.$pristine && studentToEdit.lname.$invalid ||
+        studentToEdit.lname.$dirty && studentToEdit.lname.$invalid
+       || studentToEdit.age.$dirty && studentToEdit.age.$invalid" />
+
+</div>

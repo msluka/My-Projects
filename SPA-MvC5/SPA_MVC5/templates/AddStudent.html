@@ -1,0 +1,49 @@
+﻿<form role="form" name="AddStu" style="margin-top:50px" id="add">
+    <div class="form-group">
+        <label for="inpFirstName">First Name</label>
+        <input id="inpFirstName" type="text"
+               class="form-control" ng-model="student.FirstName" name="fname" required />
+        <span style="color:red" ng-show="AddStu.fname.$dirty && AddStu.fname.$invalid">
+            <span ng-show="AddStu.fname.$error.required">Student FirstName is required.</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="inpLastName">Last Name</label>
+        <input id="inpLastName" type="text"
+               class="form-control" ng-model="student.LastName" name="lname" required />
+        <span style="color:red" ng-show="AddStu.lname.$dirty && AddStu.lname.$invalid">
+            <span ng-show="AddStu.lname.$error.required">Please Provide LastName for Student.</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="inpAge">Age</label>
+        <input id="inpAge" type="text"
+               class="form-control" ng-model="student.Age" name="age" ng-pattern="pattern" required />
+        <span style="color:red" ng-show="AddStu.age.$dirty && AddStu.age.$invalid">
+            <span ng-show="AddStu.age.$error.required">Age is required.</span>
+            <span ng-show="AddStu.age.$error.pattern">Age must be positive number.</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="inpGender">Gender : </label>
+        <label id="inpGender" ng-repeat="Gender in genders">
+            <input type="radio" ng-model="student.Gender" ng-value="Gender" />{{Gender}}
+        </label>
+    </div>
+    <div class="form-group">
+        <label for="inpGender">Status : </label>
+        <label id="inpGender" ng-repeat="Status in statuses">
+            <input type="radio" ng-model="student.Status" ng-value="Status" />{{Status}}
+        </label>
+    </div>
+</form>
+<input type="submit" id="btnAddStudent" class="btn btn-primary"
+       value="Add Student" ng-click="Add()"
+       ng-disabled="AddStu.fname.$pristine && AddStu.fname.$invalid ||
+       AddStu.fname.$dirty && AddStu.fname.$invalid || 
+       AddStu.lname.$pristine && AddStu.lname.$invalid ||
+        AddStu.lname.$dirty && AddStu.lname.$invalid
+       || AddStu.age.$dirty && AddStu.age.$invalid" />
+
+
+

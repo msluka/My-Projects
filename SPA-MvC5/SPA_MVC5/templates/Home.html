@@ -1,0 +1,25 @@
+﻿<div>
+    <div>
+        <!--<span ng-bind="students[0].Age"></span>-->
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="std in students | orderBy : 'Age'" ng-cloak>
+                <td>{{std.Id}}</td>
+                <td>{{std.FirstName}}</td>
+                <td>{{std.LastName}}</td>
+                <td>{{std.Age}}</td>
+                <td>{{std.Gender}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

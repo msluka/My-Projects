@@ -1,0 +1,205 @@
+﻿<!--<div class="container-fluid" style="margin-top:30px">
+</div>-->
+
+
+
+
+<div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
+
+    <!----------Search form Start------------->
+
+    <section class="jumbotron" style="font-size: 15px; border: 2px solid skyblue; padding-top: 18px; padding-bottom: 18px" id="jumbotron">
+
+        <div>
+            <label for="txtsearch" color:red>Search</label>
+            <input id="txtsearch" class="form-control input-sm" ng-model="searchAll" />
+        </div>
+        <div>
+            <label for="txtfnamesearch" color:red>Search by FirstName:</label>
+            <input id="txtfnamesearch" class="form-control input-sm" ng-model="Search.FirstName" />
+        </div>
+        <div>
+            <label for="txtfnamesearch">Search by LastName:</label>
+            <input id="txtfnamesearch" class="form-control input-sm" ng-model="Search.LastName" />
+        </div>
+        <div>
+            <div>
+                <label for="ddorderby">Order by : </label>
+                <select id="ddorderby" ng-model="orderbystudent" class="form-control input-sm" required>
+                    <option value="" selected>Select...</option>
+                    <option value="Age">Age</option>
+                    <option value="Gender">Gender</option>
+                </select>
+            </div>
+            <div style="margin-top: 5px">
+                <div class="btn-group">
+                    <input type="radio" style="margin-right: 5px; font-size: 10px" class="radio-inline"
+                           ng-model="direction" name="direction" checked /><label>ascending</label>
+                </div>
+                <div class="btn-group">
+                    <input type="radio" class="radio-inline" ng-model="direction" name="direction"
+                           value="reverse" /><label>descending</label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!----------Search form End------------->
+    <!----------Edit form Start------------->
+
+    <div id="editForm" class="jumbotron" style="display: none; font-size: 15px; border: 2px solid skyblue; padding-top: 18px; padding-bottom: 18px">
+        <form role="form" name="EditStu">
+            <div class="form-group">
+                <label for="inpId">Id</label>
+                <input id="inpId" type="text"
+                       class="form-control" ng-model="studentToEdit.Id" name="id" required />
+                <span style="color: red" ng-show="studentToEdit.fname.$dirty && studentToEdit.fname.$invalid">
+                    <span ng-show="studentToEdit.id.$error.required">Student Id is required.</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="inpFirstName">First Name</label>
+                <input id="inpFirstName" type="text"
+                       class="form-control" ng-model="studentToEdit.FirstName" name="fname" required />
+                <span style="color: red" ng-show="studentToEdit.fname.$dirty && studentToEdit.fname.$invalid">
+                    <span ng-show="studentToEdit.fname.$error.required">Student FirstName is required.</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="inpLastName">Last Name</label>
+                <input id="inpLastName" type="text"
+                       class="form-control" ng-model="studentToEdit.LastName" name="lname" required />
+                <span style="color: red" ng-show="studentToEdit.lname.$dirty && studentToEdit.lname.$invalid">
+                    <span ng-show="studentToEdit.lname.$error.required">Please Provide LastName for Student.</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="inpAge">Age</label>
+                <input id="inpAge" type="text"
+                       class="form-control" ng-model="studentToEdit.Age" name="age" ng-pattern="pattern" required />
+                <span style="color: red" ng-show="studentToEdit.age.$dirty && studentToEdit.age.$invalid">
+                    <span ng-show="studentToEdit.age.$error.required">Age is required.</span>
+                    <span ng-show="studentToEdit.age.$error.pattern">Age must be positive number.</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="inpGender">Gender : </label>
+                <label id="inpGender" ng-repeat="Gender in genders">
+                    <input type="radio" ng-model="studentToEdit.Gender" ng-value="Gender" />{{Gender}}
+                </label>
+            </div>
+        </form>
+        <input type="submit" id="btnAddStudent" class="btn btn-primary"
+               value="Cancel" ng-click="goto('/AllStu')" />
+        <input type="submit" id="btnAddStudent" class="btn btn-primary"
+               value="Update" ng-click="Update()"
+               ng-disabled="studentToEdit.fname.$pristine && studentToEdit.fname.$invalid ||
+       studentToEdit.fname.$dirty && studentToEdit.fname.$invalid ||
+       studentToEdit.lname.$pristine && studentToEdit.lname.$invalid ||
+        studentToEdit.lname.$dirty && studentToEdit.lname.$invalid
+       || studentToEdit.age.$dirty && studentToEdit.age.$invalid" />
+
+    </div>
+
+    <!-----------Edit form End------------>
+
+</div>
+
+
+<div class="col-md-8 col-xs-12  col-lg-8 col-sm-8">
+    {{studentToEdit}}
+    <!-----------Table Start------------> 
+    <div style="overflow-x: auto;">
+        <table class="table table-striped table-condensed table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Id</th><th>FirstName</th><th>LastName</th><th>Age</th><th>Gender</th><th>Status</th><th>Action</th>
+                </tr>
+                <tr>
+                    <th><input id="txtIdSearch" class="form-control input-sm" ng-model="Search.Id" /></th>
+                    <th><input id="txtFnameSearch" class="form-control input-sm" ng-model="Search.FirstName" /></th>
+                    <th><input id="txtLnameSearch" class="form-control input-sm" ng-model="Search.LastName" /></th>
+                    <th><input id="txtAgeSearch" class="form-control input-sm" ng-model="Search.Age" /></th>
+                    <th>
+                        <select id="txtGenderSearch" ng-model="Search.Gender" class="form-control input-sm">
+                            <option value="">Select...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </th>
+                    <th>
+                        <select id="txtStatusSearch" ng-model="Search.ReadStatus" class="form-control input-sm">
+                            <option value="">Select...</option>
+                            <option value="Read">Read</option>
+                            <option value="Unread">Unread</option>
+                        </select>
+                    </th>
+                    <th>
+                        <input type="checkbox" ng-model="exactMatch" ng-change='ExactMatchNotification(exactMatch)'>Exact Match <br />
+                        <a href="#/AddStu">
+                            <input type="button" class="btn btn-success btn-xs" value="Create a Student" />
+                        </a>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!---<tr ng-repeat="stu in students | filter: searchAll | filter: Search : exactMatch | filter:{'Gender' : Search.Gender}:false | orderBy:orderbystudent:direction ">-->
+            <tr ng-repeat="stu in filtered = (students | filter: searchAll | filter: Search : exactMatch | filter:{'Gender' : Search.Gender}:false) | 
+                orderBy:orderbystudent:direction" ng-class="{unread: (stu.ReadStatus == 'Unread'), read: (stu.ReadStatus != 'Unread')}">
+                    <td>{{stu.Id}}</td>
+                    <td>{{stu.FirstName}}</td>
+                    <td>{{stu.LastName}}</td>
+                    <td>{{stu.Age}}</td>
+                    <td>{{stu.Gender}}</td>
+                    <td>{{stu.ReadStatus}}</td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-xs" value="Update" ng-click="GetById(stu.Id, $index)" />
+                        <input type="button" class="btn btn-danger btn-xs" value="Delete" ng-click="Remove(stu.Id)" />
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-----------Table End------------>
+
+    <h3 ng-style="{ 'background': statuscolor }" style="color: white; font-weight: bold; text-align: center;" ng-show="showStatus">{{status}}</h3>
+
+    <!--<p>Number of visible students: {{(students | filter: Search ).length}}</p>-->
+
+    <p id="test">Number of visible students: {{filtered.length}}</p>
+    <p>Number of all students: {{count}}</p>
+
+    <!----------Modal button Start------------->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+    <!----------Modal button End------------->
+
+</div>
+
+
+
+<!----------Modal Start------------->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Do really want to delete?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background: grey;">
+                ...
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" ng-click="Remove(stu.Id)">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------Modal End------------->
