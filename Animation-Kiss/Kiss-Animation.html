@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+		
+		#container {
+		  width: 400px;
+		  position: relative;
+		  left: calc(50% - 200px);
+		  top: 20px;
+		}
+		
+		#red {
+		  width: 100px;
+		  height: 100px;
+		  background: red;
+		  border-radius: 0 30px 0 30px;
+		  position: absolute;
+		  /*-webkit-transform: rotate(135deg);*/
+		}
+
+		#blue {
+		  width: 100px;
+		  height: 100px;
+		  background: blue;
+		  border-radius: 30px 0 30px 0;
+		  position: absolute;  
+		  left: 140px; 
+		}
+
+		#btnStart{
+		  position: absolute;
+		  width: 80px;
+		  top: 35px;
+		  left: 10px;
+		  background: red; 
+		  color: white; 
+		  border: none; 
+		  outline: none; 		  
+		} 
+
+		#btnStop{
+		  position: absolute;
+		  width: 80px;
+		  top: 35px;
+		  left: 150px;
+		  background: blue;
+		  color: white;
+		  border: none;
+		  outline: none;
+		}
+
+		#boxDegree {
+		  font-size: 2em;
+		  font-style: italic;
+		  color: blue;
+		  display: block;
+		  position: absolute;
+		  left: 60px;
+		  top: 140px;
+		}
+
+		#boxRotation {
+		  font-size: 2em;
+		  font-style: italic;
+		  color: blue;
+		  display: block;
+		  position: absolute;
+		  left: 60px;
+		  top: 170px;
+		  display: block;
+		}
+
+		#kiss {
+		  with: 80px;
+		  height: 80px;
+		  font-size: 2em;
+		  font-style: italic;
+		  color: red;
+		  display: block;
+		  position: absolute;
+		  left: 70px;
+		  top: 220px;
+		}
+		
+		</style>
+	</head>
+	
+	<body>
+		<div id="container">
+
+		  <div id="red" style="transform: rotate(0deg);"></div>
+		  <div id="blue" style="transform: rotate(0deg);"></div>
+
+		  <button id="btnStart" onclick="animationStart()">Start</button>
+		  <button id="btnStop" onclick="animationStop()" disabled="">Stop</button>
+
+		  <div id="boxDegree">Degree 0</div>
+		  <div id="boxRotation">Rotation 0</div>
+
+		  <img id="kiss" src="http://clipart-library.com/images/BigERG86T.png" alt="Kiss" style="display: block;">
+
+		</div>
+		
+		<script>
+		
+			var deg = 0;
+			var degBack = 0;
+
+			var countRotation = 0;
+			var increment = 0;
+
+			var boxRed = document.getElementById("red");
+			var boxBlue = document.getElementById("blue");
+			var boxDegree = document.getElementById("boxDegree");
+			var boxRotation = document.getElementById("boxRotation");
+			var boxKiss = document.getElementById("kiss");
+			var btnStart = document.getElementById("btnStart");
+			var btnStop = document.getElementById("btnStop");
+
+			var on = true;
+
+			//window.onload = animationStart();
+			function animationStop() {
+			  on = false;
+
+			  deg = 0;
+			  degBack = 0;
+			  countRotation = 0;
+			  increment = 0;
+			  boxDegree.innerHTML = "Degree " + deg;
+			  boxRotation.innerHTML = "Rotation 0";
+			}
+
+			function animationStart() {
+			  increment = 1;
+			  btnStop.disabled = false;
+			  btnStart.disabled = true;
+			  var t = setInterval(move, 10);
+
+			  function move() {
+				if (deg == 360) {
+				  //clearInterval(t);
+				  deg = 0;
+				  countRotation++;
+				  boxRotation.innerHTML = "Rotation " + countRotation;
+				}
+				if (countRotation == 300 || on === false) {
+				  clearInterval(t);
+				  btnStop.disabled = true;
+				  btnStart.disabled = false;
+
+				  animationStop();
+
+				  on = true;
+				}
+
+				deg += increment;
+				degBack -= increment;
+
+				boxRed.style.webkitTransform = "rotate(" + deg + "deg)";
+				boxBlue.style.webkitTransform = "rotate(" + degBack + "deg)";
+
+				boxDegree.innerHTML = "Degree " + deg;
+
+				if (deg >= 135 && deg < 200) {
+				  boxKiss.style.display = "block";
+				}
+				if (deg >= 200 && deg < 315) {
+				  boxKiss.style.display = "none";
+				}
+				if (deg >= 315 && deg < 360) {
+				  boxKiss.style.display = "block";
+				}
+				if (deg >= 20 && deg < 135) {
+				  boxKiss.style.display = "none";
+				}
+			  }
+			}
+		</script>
+	</body>
+</html>
