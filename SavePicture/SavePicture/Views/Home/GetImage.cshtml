@@ -1,0 +1,13 @@
+﻿@model SavePicture.Models.Images
+
+@{
+    ViewBag.Title = "Image id: " + Model.Id;
+}
+<h2>@ViewBag.Title.</h2>
+
+<a href="@Url.Action(  "GetAllImages", "Home")">
+    <img src="/Home/DisplayingImage?Id=@Model.Id" class="img-rounded" style="margin:5px; width: calc(50% - 10px); display:inline;" />
+</a>
+
+
+

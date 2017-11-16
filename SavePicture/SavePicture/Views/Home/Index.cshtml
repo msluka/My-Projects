@@ -1,0 +1,147 @@
+﻿
+<div class="col-lg-3"></div>
+
+<div class="col-lg-6 panel panel-body" id="lg6">
+
+    <input type="file" id="imageBrowse" multiple="multiple" />
+    <div id="imgPreview" style="display: none;">
+        <a href="#" class="btn btn-sm btn-danger" onclick="ClearAll()">Clear</a>
+        <a href="#" class="btn btn-sm btn-success" onclick="SaveImage()">Save</a>
+    </div>
+
+</div>
+
+<div class="col-lg-3" id="uploadedImg"></div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $("#imageBrowse").change(function () {
+
+            var File = this.files;
+            for (var i = 0; i < File.length; i++) {
+                if (File && File[i]) {
+                    ReadImage(File[i]);
+                }
+            }
+        });
+
+
+    });
+
+    var ReadImage = function (file) {
+
+        var reader = new FileReader;
+        var image = new Image;
+
+        reader.readAsDataURL(file);
+        reader.onload = function (_file) {
+
+            image.src = _file.target.result;
+            image.onload = function () {
+
+                var height = this.height;
+                var width = this.width;
+                var type = file.type;
+                var size = ~~(file.size / 1024) + "KB";
+                var name = file.name;
+                var id = randomString(10);
+
+                var imgContainer =
+                    '<div id="' + id + '">' +
+                        '<img class="img-responsive thumbnail" id="targetImg" src="' + _file.target.result + '"/>' +
+                        '<div class="caption">' +
+                            '<a href="#" onclick="ClearPreview(' + id + ')">' +
+                                '<i class="glyphicon glyphicon-trash"></i>' +
+                            '</a>' +
+                            '<span id="description">Title:' + name + ', Size: ' + size + ',  ' + height + ' X' + width + ', ' + type + '</span>' +
+                        '</div>' +
+                    '</div>';
+
+                $("#imgPreview").append(imgContainer);
+
+                $("#imgPreview").show();
+
+            }
+
+        }
+
+    }
+
+    function randomString(length_) {
+
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
+
+        if (typeof length_ !== "number") {
+            length_ = Math.floor(Math.random() * chars.length_);
+        }
+
+        var str = "Id_";
+        for (var i = 0; i < length_; i++) {
+            str += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return str;
+    }
+
+
+    var ClearAll = function () {
+
+        $("#imageBrowse").val('');
+        $('#imgPreview').children().not('a').remove();
+        $("#imgPreview").hide();
+
+    }
+
+    var ClearPreview = function (ele) {
+        if (ele) {
+
+            ele.parentNode.removeChild(ele);
+            //console.log(ele.id);
+        }
+
+    }
+
+
+    var SaveImage = function () {
+
+        var data = new FormData();
+        var files = $("#imageBrowse").get(0).files;
+        //or
+        //var files = $('#imageBrowse')[0].files;
+        //var files = document.getElementById("imageBrowse").files;
+
+        for (var i = 0; i < files.length; i++) {
+            data.append("ImgFile", files[i]);
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/SaveImage",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (imgsId) {
+
+                for (var i = 0; i < imgsId.length; i++) {
+
+                    $("#uploadedImg").append('<img src="/Home/DisplayingImage?Id=' +
+                        imgsId[i] +
+                        '"class="img-responsive img-rounded" style="margin:5px;"/>');
+
+                }
+
+            }
+
+        }).done(function () {
+            // alert('success');
+            ClearAll();
+        }).fail(function (xhr, status, errorThrown) {
+            // alert('fail');
+        });
+
+    };
+
+</script>
