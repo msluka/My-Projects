@@ -1,0 +1,761 @@
+﻿@model IEnumerable<MVC_CRUD_AJAX.Models.Product>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div class="row">
+    <div class="col-md-2 col-sm-8" id="leftColumn">
+        <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 12px;">
+            <tr>
+                <td>
+                    Image<br />
+                    <input type="file" id="imageBrowseMain" multiple="multiple" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name<br />
+                    <input type="text" id="txtName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Unit:<br />
+                    <input type="text" id="txtUnit" />
+                </td>
+            </tr>
+            <td>
+                Price:<br />
+                <input type="text" id="txtPrice" />
+            </td>
+            <tr>
+                <td>
+                    <br />
+                    <input type="button" id="btnAdd" value="Add" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <input type="file" id="fileBrowse" multiple="multiple" />
+        <button id="uploadFile" class="btn btn-success">Upload</button>
+    </div>
+    <div>
+        <input type="file" id="addImgInput" multiple="multiple"/>
+        <button id="addImgButton" class="btn btn-success">Add IMG to Excel</button>
+    </div>
+    <div class="col-md-8">
+
+        <input type="text" id="filterInput" onkeyup="filterFunction()" placeholder="Search for ...">
+        <input type="checkbox" id="checkboxAll" class="checkboxForTable" />
+        <table id="tblProducts" class="table" cellpadding="0" cellspacing="0">
+            <tr id="thead">
+                <th style="width: 10px">Check</th>
+                <th style="width: 150px">IMG</th>
+                <th style="width: 100px">Id</th>
+                <th style="width: 150px">Name</th>
+                <th style="width: 150px">Unit</th>
+                <th style="width: 150px">Price</th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="checkbox" class="checkboxForTable" value="@product.Id" />
+                    </td>
+                    <td class="ProductImg" id="ProductImg">
+                        <span><img id="img" src="/Home/DisplayingImage?Id=@product.ImgsId" class="img-responsive img-rounded img" style="margin: 0px; width: 140px;" /></span>
+                        <input type="file" id="imageBrowse" multiple="multiple" style="display: none" />
+                        <p id="ImgId" style="display: none;">@product.ImgsId</p>
+                    </td>
+                    <td class="ProductId">
+                        <span>@product.Id</span>
+                    </td>
+                    <td class="Name">
+                        <span>@product.Name</span>
+                        <input type="text" value="@product.Name" style="display: none" />
+                    </td>
+                    <td class="Unit">
+                        <span>@product.Unit</span>
+                        <input type="text" value="@product.Unit" style="display: none" />
+                    </td>
+                    <td class="Price">
+                        <span>@product.Price</span>
+                        <input type="text" value="@product.Price" style="display: none" />
+                    </td>
+                    <td>
+                        <a class="Edit" href="javascript:;">Edit</a>
+                        <a class="Update" href="javascript:;" style="display: none">Update</a>
+                        <a class="Cancel" href="javascript:;" style="display: none">Cancel</a>
+                        <a class="Delete" href="javascript:;">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    </div>
+    <div class="col-md-2" id="rightColumn">
+        <button id="deleteWithCheckbox" class="btn btn-danger">Delete</button>
+        <button id="export" class="btn btn-success">Export</button>
+        <button id="exportByte" class="btn btn-success">ExportByte</button>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    //$(document).ready(function () {
+
+    //    $("#imageBrowse").change(function () {
+
+    //        var File = this.files;
+
+    //        if (File && File[0]) {
+    //            ReadImage(File[0]);
+    //        }
+
+    //    });
+
+    //});
+
+    //var ReadImage = function (file) {
+
+    //    var reader = new FileReader;
+    //    var image = new Image;
+
+    //    reader.readAsDataURL(file);
+    //    reader.onload = function (_file) {
+
+    //        image.src = _file.target.result;
+    //        image.onload = function () {
+
+    //            var height = this.height;
+    //            var width = this.width;
+    //            var type = file.type;
+    //            var size = ~~(file.size / 1024) + "KB";
+
+    //            $("#targetImg").attr('src', _file.target.result);
+    //            //$("#description").text("Size:" + size + ", " + height + "X" + width + ", " + type);
+    //            $("#imgPreview").show();
+
+    //        }
+    //    }
+    //}
+
+    var checkboxArray = [];
+
+    // Check a single checkbox
+    $('body').on('change',
+        "#checkbox",
+        function () {
+
+            if (this.checked === true) {
+
+                //alert("Checked: " + $(this).val());
+
+                checkboxArray.push($(this).val());
+                //alert(checkboxArray);
+
+            } else {
+                //alert("Unchecked: " + $(this).val());
+                var index = checkboxArray.indexOf($(this).val());
+
+                if (index != -1) {
+
+                    checkboxArray.splice(index, 1);
+                    //alert(checkboxArray);
+                }
+            }
+
+        });
+
+    // Check multiple checkboxes
+    $("#checkboxAll").on('change',
+        function () {
+
+
+            var checkboxes = $("#tblProducts").find(":checkbox").not($("#checkboxAll"));
+            if ($(this).prop('checked')) {
+                checkboxArray = [];
+                checkboxes.prop('checked', true);
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxArray.push(checkboxes[i].value);
+
+                }
+
+                //alert(checkboxArray);
+
+
+            } else {
+                checkboxArray = [];
+                checkboxes.prop('checked', false);
+                //alert(checkboxArray);
+            }
+
+
+        });
+
+
+    // Function for clearing Img Input
+    function resetFormElement(e) {
+        e.wrap('<form>').closest('form').get(0).reset();
+        e.unwrap();
+
+        // Prevent form submission
+        //e.stopPropagation();
+        //e.preventDefault();
+    }
+
+
+    //Add event handler.
+    $("body").on("click",
+        "#btnAdd",
+        function () {
+
+            var txtName = $("#txtName");
+            var txtUnit = $("#txtUnit");
+            var txtPrice = $("#txtPrice");
+
+            var data = new FormData();
+
+            var files = document.getElementById("imageBrowseMain").files;
+
+
+            for (var i = 0; i < files.length; i++) {
+                data.append("ImgFile", files[i]);
+            }
+            var Name = txtName.val();
+            var Unit = txtUnit.val();
+            var Price = txtPrice.val();
+            data.append("ProductName", Name);
+            data.append("ProductUnit", Unit);
+            data.append("ProductPrice", Price);
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/InsertProduct",
+                //data: '{product:' + JSON.stringify(product) + '}',
+                data: data,
+                //contentType: "application/json; charset=utf-8",
+                contentType: false,
+                processData: false,
+                //dataType: "json",
+                success: function (r) {
+
+                    var row = $('<tr>' +
+                        '<td><input type="checkbox" id="checkbox" class="checkboxForTable" value=' +
+                        r.Id +
+                        ' /></td>' +
+                        '<td class="ProductImg"><span>' +
+                        '<img id="img" src="/Home/DisplayingImage?Id=' +
+                        r.ImgsId +
+                        '" class="img-responsive img-rounded img" style="margin:0px; width:140px;"/>' +
+                        '</span><input type="file" id="imageBrowse" multiple="multiple" style="display: none" />' +
+                        '<p id="ImgId" style="display: none;">' +
+                        r.ImgsId +
+                        '</p></td>' +
+                        '<td class="ProductId"><span>' +
+                        r.Id +
+                        '</span></td>' +
+                        '<td class="Name"><span>' +
+                        r.Name +
+                        '</span><input type="text" value="' +
+                        r.Name +
+                        '" style="display:none" /></td>' +
+                        '<td class="Unit"><span>' +
+                        r.Unit +
+                        '</span><input type="text" value="' +
+                        r.Unit +
+                        '" style="display:none" /></td>' +
+                        '<td class="Name"><span>' +
+                        r.Price +
+                        '</span><input type="text" value="' +
+                        r.Price +
+                        '" style="display:none" /></td>' +
+                        '<td><a class="Edit" href="javascript:;">Edit</a>' +
+                        '<a class="Update" href="javascript:;" style="display:none">Update</a>' +
+                        '<a class="Cancel" href="javascript:;" style="display:none"> Cancel</a>' +
+                        '<a class="Delete" href="javascript:;"> Delete</a>' +
+                        '</td>' +
+                        '</tr>').hide().fadeIn(3000);
+
+                    //row.find('img').animate({
+                    //        height: "100px"
+                    //    },
+                    //    {
+                    //        queue: false,
+                    //        duration: 5000
+                    //    });
+
+                    //$('tr')
+
+
+                    $("#tblProducts").append(row);
+
+                    txtName.val("");
+                    txtUnit.val("");
+                    txtPrice.val("");
+
+                    resetFormElement($("#imageBrowseMain"));
+
+                }
+            });
+        });
+
+    //Edit event handler.
+    $("body").on("click",
+        "#tblProducts .Edit",
+        function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").not(':checkbox').length > 0) {
+                    $(this).find("input").show();
+                    $(this).find("span").hide();
+                }
+            });
+            row.find(".Update").show();
+            row.find(".Cancel").show();
+            row.find(".Delete").hide();
+            $(this).hide();
+        });
+
+    //Update event handler.
+    $("body").on("click",
+        "#tblProducts .Update",
+        function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+                if ($(this).find("input").length > 0) {
+                    var span = $(this).find("span");
+                    var input = $(this).find("input").not($("#imageBrowse, #checkbox"));
+                    var imgInput = $(this).find("#imageBrowse");
+                    var imgId = $(this).find("#ImgId");
+
+                    span.html(input.val());
+                    span.show();
+                    input.hide();
+                    imgInput.hide();
+                }
+            });
+            row.find(".Edit").show();
+            row.find(".Delete").show();
+            row.find(".Cancel").hide();
+            $(this).hide();
+
+
+            var data = new FormData();
+
+            var files = row.find("#imageBrowse").get(0).files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append("ImgFile", files[i]);
+            }
+            var ProductId = row.find(".ProductId").find("span").html();
+            var Name = row.find(".Name").find("span").html();
+            var Unit = row.find(".Unit").find("span").html();
+            var Price = row.find(".Price").find("span").html();
+            var ImgId = row.find("#ImgId").html();
+
+            data.append("ProductId", ProductId);
+            data.append("ProductName", Name);
+            data.append("ProductUnit", Unit);
+            data.append("ProductPrice", Price);
+            data.append("ImageId", ImgId);
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/UpdateProduct",
+                data: data,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (r) {
+
+                    var imgInput = row.find("#imageBrowse");
+                    var td = imgInput.closest('td');
+                    td.addClass("ProductImg");
+                    var tdInner = '<span><img src="/Home/DisplayingImage?Id=' +
+                        r +
+                        '" class="img-responsive img-rounded" style="margin:0px; width:140px;"/>' +
+                        '</span><input type="file" id="imageBrowse" multiple="multiple" style="display: none" />' +
+                        '<p id="ImgId" style="display: none;">' +
+                        r +
+                        '</p>';
+                    td.html(tdInner);
+                }
+
+            });
+        });
+
+    //Cancel event handler.
+    $("body").on("click",
+        "#tblProducts .Cancel",
+        function () {
+            var row = $(this).closest("tr");
+            $("td", row).each(function () {
+
+                var input = $(this).find("input").not("#imageBrowse, #checkbox");
+                var span = input.siblings("span");
+
+                input.val(span.html());
+
+                span.show();
+                input.hide();
+
+                var imgInput = $(this).find("#imageBrowse");
+                var imgSpan = imgInput.siblings("span");
+
+                if (imgInput.length > 0) {
+                    resetFormElement(imgInput);
+                }
+
+
+                imgInput.hide();
+                imgSpan.show();
+
+
+            });
+
+
+            row.find(".Edit").show();
+            row.find(".Delete").show();
+            row.find(".Update").hide();
+            $(this).hide();
+        });
+
+    //Delete event handler.
+    $("body").on("click",
+        "#tblProducts .Delete",
+        function () {
+            if (confirm("Do you want to delete this row?")) {
+                var row = $(this).closest("tr");
+
+                var checkboxVal = row.find(':checkbox').val();
+                var index = checkboxArray.indexOf(checkboxVal);
+
+                var productId = row.find(".ProductId").find("span").html();
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/DeleteProduct",
+                    data: '{productId: ' + productId + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    //async: false,
+                    success: function (response) {
+                        //row.remove();
+                    },
+                    error: function (response) {
+                        // alert("Something went wrong!");
+
+                    }
+                }).done(row.fadeOut(500,
+                    function () {
+
+                        if (index != -1) {
+
+                            checkboxArray.splice(index, 1);
+                            //alert(checkboxArray);
+                        }
+
+                        row.remove();
+
+                        //alert("Successfully deleted");
+                    }));
+            }
+        });
+
+
+    //DeleteMultiple event handler.
+    $("body").on("click",
+        "#deleteWithCheckbox",
+        function () {
+            if (checkboxArray.length === 0) {
+                alert("No Item Was Selected")
+            };
+            if (checkboxArray.length > 0 && confirm("Do you want to delete this rows?")) {
+
+                var checkboxes = $("#tblProducts").find(":checkbox").not($("#checkboxAll"));
+                var tbl = $("#tblProducts");
+
+
+                var data = JSON.stringify(checkboxArray);
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/DeleteProducts",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    //async: false,
+                    success: function (response) {
+                        //row.remove();
+
+
+                    },
+                    error: function (response) {
+                        // alert("Something went wrong!");
+
+                    }
+                }).done(
+                    checkboxes.each(function () {
+                        if (this.checked === true)
+                            $(this).closest('tr').remove();
+
+                        /// --- Remove row by index
+                        //$("tr", tbl).eq(0).remove();
+
+                        /// --- Alert index of row of the checked checkboxes
+                        //alert(checkboxes.index(this));
+
+                    })
+                );
+
+            }
+        });
+
+    // Search and filter the Table
+    function filterFunction() {
+
+        var filter = $("#filterInput").val();
+        $.each($("#tblProducts").find("tr").not($("#thead")),
+            function () {
+
+                if ($(this).text().toLowerCase().replace(/-|\s+/g, '')
+                    .indexOf(filter.replace(/-|\s+/g, '').toLowerCase()) ==
+                    -1)
+                    $(this).hide();
+                else
+                    $(this).show();
+            });
+
+    };
+
+
+    //$(document).on('click', '.img',
+    //    function (e) {
+    //        e.preventDefault();
+    //        $('.tempImg').remove();
+    //        var img = $(this).clone(true);
+
+    //        img.addClass("tempImg");
+    //        //var windowHeight = $(window).height();
+    //        //img.css({ "width": "500px", "position": "absolute", "left": "calc(50% - 250px)", "top": "30%" });
+    //        img.css({ "width": "500px" });
+    //        $('#rightColumn').append(img);
+
+    //    });
+    $(document).on('click',
+        '.img',
+        function (e) {
+            //e.preventDefault();
+            $('.tempImg').remove();
+
+            var img = $(this).parent().find('img').clone(true);
+
+            img.addClass("tempImg");
+
+            img.css({ "width": "500px" });
+            $('#rightColumn').append(img);
+
+        });
+
+
+    $(document).on('click',
+        function (evt) {
+            var tempImg = $('.tempImg');
+            if ($(evt.target).closest('#ProductImg').length > 0) {
+                return false;
+            } else {
+                tempImg.remove();
+            }
+
+        });
+
+    @*$("body").on("mouseover", "#export",
+        function() {
+            window.location.href = '@Url.Action("Export", "Home")';
+
+
+        });*@
+
+
+    $("body").on("click",
+        "#export",
+        function () {
+
+            //$.blockUI({ message: '<h3>Please wait a moment...</h3>' });
+            $.ajax({
+                url: "/Home/Export",
+
+                success: function (data) {
+                    // $.unblockUI();
+
+                }
+            }).done(function (data) {
+                if (data.fName != null && data.fPath != null) {
+                    //$.unblockUI();
+                    //use window.location.href for redirect to download action for download the file
+
+                    window.location.href = '@Url.Action("Download", "Home")/?filePath=' + data.fPath + '&fileName=' + data.fName;
+
+                }
+
+            });
+        });
+
+    $("body").on("click",
+        "#exportByte",
+        function () {
+
+            //$.blockUI({ message: '<h3>Please wait a moment...</h3>' });
+            $.ajax({
+                url: "/Home/ExportByte",
+
+                success: function (data) {
+                    // $.unblockUI();
+
+                }
+            }).done(function (data) {
+                if (data != null) {
+
+                    @*window.location.href = '@Url.Action("DownloadFileBite", "Home")/?filePath=' + data;*@
+                    window.location.href = '@Url.Action("DownloadFileBite", "Home")/' + data;
+
+                }
+
+            });
+        });
+
+
+    $("body").on("click",
+        "#uploadFile",
+        function () {
+
+            var data = new FormData();
+
+            var files = document.getElementById("fileBrowse").files;
+
+            //var ob = [];
+            for (var i = 0; i < files.length; i++) {
+
+
+                data.append("UploadFile", files[i]);
+                data.append("FileName", files[i].name);
+                data.append("FileType", files[i].type);
+                data.append("FileSize", files[i].size);
+
+                //var file = {
+                //    "UploadFile": files[i],
+                //    "FileName": files[i].name,
+                //    "FileType": files[i].type,
+                //    "FileSize": files[i].size
+
+                //}
+
+                //ob.push(file);
+
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/UploadFile",
+                //data: '{product:' + JSON.stringify(product) + '}',
+                //data: JSON.stringify(ob),
+                data: data,
+                //contentType: "application/json; charset=utf-8",
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                contentType: false,
+                processData: false,
+                //dataType: "json",
+                success: function (r) {
+
+                    @*resetFormElement($("#fileBrowse"));
+
+
+                        for (var i = 0; i < r.length; i++) {
+                       // alert(r[i]);
+                        window.location.href = '@Url.Action("DownloadUploadedFileBite", "Home")/' + r[i];
+
+                        }*@
+
+
+
+
+
+                }
+            }).done(function(r) {
+
+                    resetFormElement($("#fileBrowse"));
+                
+                  
+                 
+                   for (var i = 0; i < r.length; i++)
+                    {
+                        //alert(r[i]);
+                   
+                       // window.location.href = '@Url.Action("DownloadUploadedFileBite", "Home")/' + r[i];
+
+                       // window.open('http://localhost:64507/Home/DownloadUploadedFileBite/'+r[i], '_blank'); //Works after pop-up unblock in browser
+                        window.open('http://localhost:64507/Home/DownloadUploadedFileBite/' + r[i]); // Works
+                    }
+
+            }
+
+
+
+            );
+        });
+
+    //Add Img To Excel
+    $("body").on("click",
+        "#addImgButton",
+        function () {
+
+            var data = new FormData();
+            var files = document.getElementById("addImgInput").files;
+
+            for (var i = 0; i < files.length; i++) {
+
+                data.append("UploadFile", files[i]);
+
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/AddImgToExcel",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function(r) {
+
+                    alert("Range: " + r.Range + "; Filled Rows: " + r.Filled + "; Images Inserted: " + r.ImagesInserted);
+
+                }
+            });
+        });
+
+    //$(document).ready(function () {
+
+    //    $("#fileBrowse").change(function () {
+
+    //        var File = this.files;
+    //        alert(File[0].name + ' ' + File[0].type + ' ' + File[0].size);
+    //        //if (File && File[0]) {
+    //        //    ReadImage(File[0]);
+    //        //}
+
+    //    });
+
+    //});
+
+
+</script>
